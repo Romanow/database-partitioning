@@ -1,0 +1,55 @@
+plugins {
+    id "idea"
+    id "org.jetbrains.kotlin.jvm" version "1.7.10"
+    id "org.jetbrains.kotlin.plugin.spring" version "1.7.10"
+    id "org.springframework.boot" version "3.0.5"
+    id "io.spring.dependency-management" version "1.1.0"
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+ext {
+    testCntainerVersion = "1.16.0"
+}
+
+[compileKotlin, compileTestKotlin]*.kotlinOptions*.jvmTarget = "17"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+
+    implementation "org.postgresql:postgresql"
+    implementation "org.flywaydb:flyway-core"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.testcontainers:postgresql:$testCntainerVersion"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+springBoot {
+    buildInfo()
+}
+
+bootJar {
+    archiveFileName = "${project.name}.jar"
+}

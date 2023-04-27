@@ -1,0 +1,37 @@
+version: "3"
+services:
+  postgres:
+    image: library/postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./postgres/:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432:5432"
+
+  camunda-state-machine:
+    build: .
+    image: romanowalex/camunda-state-machine:v1.0
+    container_name: camunda-state-machine
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - wiremock
+
+  wiremock:
+    image: wiremock/wiremock:2.35.0
+    container_name: wiremock
+    volumes:
+      - ./stubs:/home/wiremock/
+    ports:
+      - "9999:8080"
+
+volumes:
+  db-data:
