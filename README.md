@@ -26,3 +26,15 @@
     ```
 3. При создании новой записи добавлять запись в таблицу `ranges`, если этой записи там еще нет.
 4. Внедрить этот механизм в `CrudRepository`.
+
+## Реализация
+
+Используем партициоривание в [Postrges](https://www.postgresql.org/docs/13/ddl-partitioning.html).
+
+Выключаем валидацию схемы:
+
+```yaml
+spring:
+  jpa:
+    hibernate.ddl-auto: none
+```

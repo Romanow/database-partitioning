@@ -2,32 +2,22 @@ package ru.romanow.partitioning.domain
 
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.SequenceGenerator
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
-@Table
+@Table(name = "users")
+@EntityListeners(AuditingEntityListener::class)
 data class User(
 
     @Id
-    @SequenceGenerator(name = "seq_users_generator")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "generator", sequenceName = "seq_users_generator", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     var id: Int? = null,
 
     @Column(name = "login", nullable = false)
     var login: String? = null,
-
-    @Column(name = "first_name", nullable = false)
-    var firstName: String? = null,
-
-    @Column(name = "last_name", nullable = false)
-    var lastName: String? = null,
 
     @CreatedDate
     @Column(name = "created_date", nullable = false)
