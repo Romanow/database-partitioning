@@ -6,7 +6,7 @@ spring:
   application.name: database-partitioning
   main.banner-mode: off
   jpa:
-    hibernate.ddl-auto: none
+    hibernate.ddl-auto: validate
     open-in-view: false
   shell:
     history:

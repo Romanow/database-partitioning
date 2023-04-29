@@ -10,10 +10,15 @@
 
 Используем партициоривание в [Postrges](https://www.postgresql.org/docs/13/ddl-partitioning.html).
 
-Выключаем валидацию схемы:
+```sql
+SELECT * FROM users;
 
-```yaml
-spring:
-  jpa:
-    hibernate.ddl-auto: none
+INSERT INTO users (login, created_date, last_modified_date)
+VALUES ('login', '2023-04-30', NOW());
+
+SELECT * FROM users;
+
+DROP TABLE users_2023_04;
+
+SELECT * FROM users;
 ```
