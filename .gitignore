@@ -2,6 +2,7 @@
 .gradle/
 out/
 build/
+.vagrant/
 .DS_Store
 
 *.iml
